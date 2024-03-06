@@ -12,7 +12,7 @@ const teams_projects: {
 } = {}
 
 await Promise.all(
-  teams.map(async (team) => {
+  teams.map(async team => {
     teams_projects[team.id] = await getProjects({
       pb: Astro.locals.pb,
       team_id: team.id,
@@ -94,7 +94,7 @@ const p_classes =
 
   {
     teams.length > 0 &&
-      teams.map((team) => {
+      teams.map(team => {
         return (
           <div class='mb-6 rounded-lg bg-zinc-800'>
             <a

@@ -19,6 +19,7 @@ export async function getProjects(pb: TypedPocketBase) {
 export async function addProject(pb: TypedPocketBase, name: string) {
   const newProject = await pb.collection('projects').create({
     name,
+    created_by: pb.authStore.model?.id,
     status: 'not started',
   })
 

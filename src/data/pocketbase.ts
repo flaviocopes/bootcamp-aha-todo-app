@@ -53,7 +53,7 @@ export async function getProject(pb: TypedPocketBase, id: string) {
 export async function addTask(
   pb: TypedPocketBase,
   project_id: string,
-  text: string,
+  text: string
 ) {
   const newTask = await pb.collection('tasks').create({
     project: project_id,

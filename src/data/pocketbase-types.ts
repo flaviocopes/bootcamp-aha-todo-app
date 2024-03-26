@@ -93,6 +93,20 @@ export type TeamsRecord = {
   stripe_subscription_id?: string
 }
 
+export enum TeamsStatusOptions {
+  'inactive' = 'inactive',
+  'active' = 'active',
+  'freezed' = 'freezed',
+}
+export type TeamsRecord = {
+  created_by?: RecordIdString
+  members?: RecordIdString[]
+  name?: string
+  portal_url?: string
+  status?: TeamsStatusOptions
+  stripe_subscription_id?: string
+}
+
 export type UsersRecord = {
   avatar?: string
   name?: string

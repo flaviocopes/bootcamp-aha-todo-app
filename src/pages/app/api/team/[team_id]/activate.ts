@@ -1,5 +1,4 @@
 import { initStripe } from '@lib/stripe'
-
 import type { APIRoute } from 'astro'
 
 export const POST: APIRoute = async ({ params, request }) => {

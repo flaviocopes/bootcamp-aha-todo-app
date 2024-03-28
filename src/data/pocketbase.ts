@@ -3,6 +3,7 @@ import type {
   ProjectsResponse,
   TasksRecord,
   TasksResponse,
+  TeamsRecord,
   TypedPocketBase,
 } from '@src/data/pocketbase-types'
 
@@ -21,6 +22,7 @@ export async function addProject(pb: TypedPocketBase, name: string) {
     name,
     created_by: pb.authStore.model?.id,
     status: 'not started',
+    team: team_id,
   })
 
   return newProject
@@ -125,6 +127,12 @@ export async function getStarredTasks(
     expand: 'project',
   }
 
+  if (team_id) {
+    options.filter += ` && project.team = "${team_id}"`
+  } else {
+    options.filter += ` && project.team = ""`
+  }
+
   const tasks: TasksResponse<TexpandProject>[] = await pb
     .collection('tasks')
     .getFullList(options)
@@ -178,4 +186,17 @@ export async function userIsTeamOwner(pb: TypedPocketBase, team_id: string) {
     return true
   }
   return false
+}
+
+export async function getTeams() {
+  const teams = await pb.collection('teams').getFullList()
+  return teams
+}
+
+export async function deleteTeam(id: string) {
+  return await pb.collection('teams').delete(id)
+}
+
+export async function updateTeam(id: string, data: TeamsRecord) {
+  await pb.collection('teams').update(id, data)
 }

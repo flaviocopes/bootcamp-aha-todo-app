@@ -25,7 +25,7 @@ const projects = await getProjects(Astro.locals.pb)
 
     <div class='space-y-6'>
       <ul class='grid gap-6 sm:grid-cols-2'>
-        {projects.map((project) => <ProjectCard project={project} />)}
+        {projects.map(project => <ProjectCard project={project} />)}
       </ul>
       <AddNewProjectCard />
     </div>

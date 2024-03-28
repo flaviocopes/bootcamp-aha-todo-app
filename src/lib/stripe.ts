@@ -31,7 +31,7 @@ export async function searchSubscriptionsByTeamId(
   })
 
   const res = await Promise.all(
-    search.data.map(async subscription => {
+    search.data.map(async (subscription) => {
       const customer = subscription.customer
       if (typeof customer === 'string') {
         throw new Error('data.customer was not expanded in search')

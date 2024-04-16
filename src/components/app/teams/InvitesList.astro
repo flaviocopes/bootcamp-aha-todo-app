@@ -13,7 +13,7 @@ const invites = await getInvitesForTeam(Astro.locals.pb, team.id)
         Invited people
       </h2>
       <ul class='list-disc list-inside text-zinc-800 dark:text-white'>
-        {invites.map((invite) => (
+        {invites.map(invite => (
           <li>{invite.email}</li>
         ))}
       </ul>

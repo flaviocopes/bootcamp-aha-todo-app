@@ -34,7 +34,7 @@ const owner = await getOwnerOfTeam(Astro.locals.pb, team)
     <span>{owner.email}</span>
   </div>
   {
-    members?.map((member) => (
+    members?.map(member => (
       <div class='pb-10 list-disc list-inside text-zinc-800 dark:text-white flex'>
         {member.id == getCurrentUserId(Astro.locals.pb) && (
           <span

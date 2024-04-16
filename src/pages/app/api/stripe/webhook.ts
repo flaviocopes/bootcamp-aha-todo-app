@@ -132,5 +132,27 @@ export const POST: APIRoute = async ({ request, locals }) => {
     })
   }
 
+  if (event.type === 'customer.subscription.deleted') {
+    const { id: subscription_id, metadata } = event.data.object
+
+    const { team_id } = metadata
+
+    const team = await getTeam(team_id)
+
+    if (!team) {
+      throw new Error('Team not found')
+    }
+
+    const { stripe_subscription_id } = team
+
+    if (stripe_subscription_id !== subscription_id) {
+      throw new Error('Subscription ID mismatch')
+    }
+
+    await updateTeam(team_id, {
+      status: TeamsStatusOptions.freezed,
+    })
+  }
+
   return new Response('Event received', { status: 200 })
 }

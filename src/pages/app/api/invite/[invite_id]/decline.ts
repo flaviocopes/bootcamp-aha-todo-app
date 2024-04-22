@@ -26,6 +26,13 @@ export const POST: APIRoute = async ({ params, request, locals }) => {
     type: 'invite_declined',
   })
 
+  await addActivity({
+    team: team.id,
+    project: '',
+    text: `Team ${team.name} invite declined by ${getUserUsername(request)}}`,
+    type: 'invite_declined',
+  })
+
   return new Response(null, {
     status: 204,
     statusText: 'No Content',

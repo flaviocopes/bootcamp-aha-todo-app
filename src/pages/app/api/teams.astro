@@ -16,6 +16,13 @@ if (Astro.request.method === 'POST') {
     type: 'team_created',
   })
 
+  await addActivity({
+    team: team.id,
+    project: '',
+    text: `Team ${team.name} created`,
+    type: 'team_created',
+  })
+
   Astro.response.headers.set('HX-Redirect', `/app/team/${team.id}`)
 }
 ---

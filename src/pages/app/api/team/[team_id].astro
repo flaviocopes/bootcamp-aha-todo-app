@@ -33,6 +33,13 @@ if (Astro.request.method === 'DELETE') {
     type: 'team_delete',
   })
 
+  await addActivity({
+    team: '',
+    project: '',
+    text: `Team ${team.name} deleted`,
+    type: 'team_delete',
+  })
+
   return new Response(null, {
     status: 204,
     statusText: 'No Content',

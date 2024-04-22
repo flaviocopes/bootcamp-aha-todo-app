@@ -53,6 +53,13 @@ export const POST: APIRoute = async ({ params, request, locals }) => {
     type: 'invite_created',
   })
 
+  await addActivity({
+    team: team.id,
+    project: '',
+    text: `Invited to "${team.name}" created for ${email}`,
+    type: 'invite_created',
+  })
+
   return new Response(null, {
     status: 204,
     statusText: 'No Content',

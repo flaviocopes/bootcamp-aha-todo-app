@@ -414,6 +414,7 @@ export async function getCollaborators() {
           }
         })
       )
+      collaborators.push(await getOwnerOfTeam(team))
     })
   )
 

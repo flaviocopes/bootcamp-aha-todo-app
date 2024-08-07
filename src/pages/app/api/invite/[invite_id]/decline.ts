@@ -38,6 +38,7 @@ export const POST: APIRoute = async ({ params, request, locals }) => {
   })
 
   await addActivity({
+    pb: locals.pb,
     team: team.id,
     project: '',
     text: `Team ${team.name} invite declined by ${getUserUsername(request)}}`,

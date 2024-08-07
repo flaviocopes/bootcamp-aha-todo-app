@@ -9,7 +9,6 @@ import {
   getCollaborators,
   getTeams,
 } from '@data/pocketbase'
-
 import { getCurrentUserId } from '@lib/auth'
 
 const teams = await getTeams(Astro.locals.pb)

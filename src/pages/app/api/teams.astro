@@ -25,6 +25,7 @@ if (Astro.request.method === 'POST') {
   })
 
   await addActivity({
+    pb: Astro.locals.pb,
     team: team.id,
     project: '',
     text: `Team ${team.name} created`,

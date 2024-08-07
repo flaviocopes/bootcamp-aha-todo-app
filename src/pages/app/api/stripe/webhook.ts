@@ -149,7 +149,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       throw new Error('Subscription ID mismatch')
     }
 
-    await updateTeam(team_id, {
+    await updateTeam(locals.pb, team_id, {
       status: TeamsStatusOptions.freezed,
     })
   }

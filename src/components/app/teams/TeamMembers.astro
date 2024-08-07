@@ -2,7 +2,6 @@
 const { team } = Astro.props
 
 import { getMembersOfTeam, getOwnerOfTeam } from '@data/pocketbase'
-
 import { getCurrentUserId } from '@lib/auth'
 
 const members = await getMembersOfTeam(Astro.locals.pb, team.id)

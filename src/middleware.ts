@@ -5,6 +5,9 @@ import PocketBase from 'pocketbase'
 import type { TypedPocketBase } from '@src/data/pocketbase-types'
 
 import { isLoggedIn, isUserVerified } from '@lib/auth'
+import PocketBase from 'pocketbase'
+
+import type { TypedPocketBase } from '@src/data/pocketbase-types'
 
 export const onRequest = defineMiddleware(async (context, next) => {
   context.locals.pb = new PocketBase(

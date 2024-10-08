@@ -10,7 +10,6 @@ type TexpandProject = {
   project?: ProjectsResponse
 }
 
-<<<<<<< HEAD
 export async function getProjects(pb: TypedPocketBase) {
   const projects = await pb.collection('projects').getFullList()
 
@@ -20,25 +19,6 @@ export async function getProjects(pb: TypedPocketBase) {
 export async function addProject(pb: TypedPocketBase, name: string) {
   const newProject = await pb.collection('projects').create({
     name,
-=======
-export const pb = new PocketBase(
-  import.meta.env.POCKETBASE_URL || process.env.POCKETBASE_URL
-) as TypedPocketBase
-
-// globally disable auto cancellation
-pb.autoCancellation(false)
-
-export async function getProjects() {
-  const projects = await pb.collection('projects').getFullList()
-
-  return projects.sort((a, b) => getStatus(a) - getStatus(b))
-}
-
-export async function addProject(name: string) {
-  const newProject = await pb.collection('projects').create({
-    name,
-    created_by: pb.authStore.model?.id,
->>>>>>> 6617672 (mod5)
     status: 'not started',
   })
 
@@ -51,15 +31,11 @@ export async function getProject(pb: TypedPocketBase, id: string) {
   return project
 }
 
-<<<<<<< HEAD
 export async function addTask(
   pb: TypedPocketBase,
   project_id: string,
   text: string
 ) {
-=======
-export async function addTask(project_id: string, text: string) {
->>>>>>> 6617672 (mod5)
   const newTask = await pb.collection('tasks').create({
     project: project_id,
     created_by: pb.authStore.model?.id,
@@ -117,15 +93,11 @@ export async function deleteProject(pb: TypedPocketBase, id: string) {
   await pb.collection('projects').delete(id)
 }
 
-<<<<<<< HEAD
 export async function updateProject(
   pb: TypedPocketBase,
   id: string,
   data: ProjectsRecord
 ) {
-=======
-export async function updateProject(id: string, data: ProjectsRecord) {
->>>>>>> 6617672 (mod5)
   await pb.collection('projects').update(id, data)
 }
 

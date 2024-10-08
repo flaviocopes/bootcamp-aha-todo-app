@@ -27,22 +27,20 @@ const { title = 'Secretplan' } = Astro.props
       "
     />
     <script>
-      import * as htmx from 'htmx.org'
+      import htmx from 'htmx.org'
       import Alpine from 'alpinejs'
 
       declare global {
         interface Window {
-          htmx: any
-          Alpine: any
+          htmx: typeof htmx
+          Alpine: typeof Alpine
         }
       }
 
-      window.htmx = htmx //optional
-      window.Alpine = Alpine //optional
+      window.htmx = htmx
+      window.Alpine = Alpine
 
       Alpine.start()
-
-      htmx.process(document.body)
     </script>
 
     <script is:inline>

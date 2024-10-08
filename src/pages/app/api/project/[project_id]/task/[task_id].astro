@@ -49,7 +49,7 @@ if (Astro.request.method === 'PUT') {
         })
         break
       case 'edit-text':
-        await updateTask(task_id, {
+        await updateTask(Astro.locals.pb, task_id, {
           text: formData.get('task-text') as string,
         })
         break

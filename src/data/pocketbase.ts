@@ -130,7 +130,7 @@ export async function getStarredTasks(
   return tasks
 }
 
-export function processImages(task: TasksResponse) {
+export function processImages(pb: TypedPocketBase, task: TasksResponse) {
   type ImageItem = {
     name: string
     url: string

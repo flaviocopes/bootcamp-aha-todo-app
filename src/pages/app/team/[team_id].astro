@@ -19,7 +19,7 @@ try {
 
 const is_owner = await userIsTeamOwner(Astro.locals.pb, team_id)
 
-const projects = await getProjects({ team_id })
+const projects = await getProjects({ pb: Astro.locals.pb, team_id })
 ---
 
 <Layout title='SECRETPLAN'>
@@ -71,7 +71,7 @@ const projects = await getProjects({ team_id })
           </div>
           <div class='space-y-6'>
             <ul class='grid gap-6 sm:grid-cols-2'>
-              {projects.map(project => (
+              {projects.map((project) => (
                 <ProjectCard project={project} />
               ))}
             </ul>

@@ -10,12 +10,12 @@ if (Astro.request.method === 'POST') {
   const project_name = formData.get('project_name')?.toString() || ''
 
   let project
-
   try {
-    await addProject(Astro.locals.pb, project_name)
-  } catch (e) {
-    return new Response('An error occurred', {
-      status: 400,
+    project = await addProject(Astro.locals.pb, project_name, team_id)
+  } catch (e: any) {
+    console.log(e)
+    return new Response(e.response.message, {
+      status: e.response.code,
     })
   }
 

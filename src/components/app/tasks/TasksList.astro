@@ -12,7 +12,7 @@ const { project_id, done, starred, team_id } = Astro.props
 let tasks = null
 
 if (starred) {
-  tasks = await getStarredTasks(Astro.locals.pb)
+  tasks = await getStarredTasks({ pb: Astro.locals.pb })
 } else {
   tasks = await getTasks({ pb: Astro.locals.pb, project_id, done })
 }
@@ -26,7 +26,7 @@ if (starred) {
 
 <ul class='space-y-6 mb-10' x-data='dragAndDropIntoTask()'>
   {
-    tasks.map(task => (
+    tasks.map((task) => (
       <li
         @dragover.prevent='dragover = true'
         @dragleave.prevent='dragover = false'

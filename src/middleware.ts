@@ -37,19 +37,6 @@ export const onRequest = defineMiddleware(async (context, next) => {
         return context.redirect('/login')
       }
     }
-
-    if (await isLoggedIn(context.request)) {
-      const verified = await isUserVerified()
-      if (!verified) {
-        if (context.url.pathname.startsWith('/app')) {
-          return context.redirect('/verify')
-        }
-      } else {
-        if (context.url.pathname === '/verify') {
-          return context.redirect('/app/dashboard')
-        }
-      }
-    }
   }
 
   return next()

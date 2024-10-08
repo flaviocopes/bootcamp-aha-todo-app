@@ -5,7 +5,7 @@ import { updateTeam } from '@src/data/pocketbase'
 import { TeamsStatusOptions } from '@src/data/pocketbase-types'
 import { initStripe } from '@lib/stripe'
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, locals }) => {
   const webhook_secret =
     import.meta.env.STRIPE_WEBHOOK_SECRET || process.env.STRIPE_WEBHOOK_SECRET
   const stripe = initStripe()
@@ -42,7 +42,7 @@ export const POST: APIRoute = async ({ request }) => {
       })
     ).url
 
-    await updateTeam(team_id, {
+    await updateTeam(locals.pb, team_id, {
       status: TeamsStatusOptions.active,
       portal_url,
       stripe_subscription_id: subscription.id,

@@ -2,8 +2,29 @@
 import { getProjects, getTeams, getProject } from '@data/pocketbase'
 import { getUserUsername } from '@lib/auth'
 
-const projects = await getProjects(Astro.locals.pb)
+import type { ProjectsResponse } from '@data/pocketbase-types'
 
+const projects = await getProjects({ pb: Astro.locals.pb })
+const teams = await getTeams(Astro.locals.pb)
+
+const teams_projects: {
+  [key: string]: ProjectsResponse[]
+} = {}
+
+await Promise.all(
+  teams.map(async (team) => {
+    teams_projects[team.id] = await getProjects({
+      pb: Astro.locals.pb,
+      team_id: team.id,
+    })
+  })
+)
+
+let team_id = ''
+if (Astro.params.project_id) {
+  const project = await getProject(Astro.locals.pb, Astro.params.project_id)
+  team_id = project.team
+}
 const p_classes =
   'block bg-zinc-100 dark:bg-zinc-900 py-2 pl-2 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-800 border dark:border-0 dark:border-b border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-white '
 ---
@@ -73,7 +94,7 @@ const p_classes =
 
   {
     teams.length > 0 &&
-      teams.map(team => {
+      teams.map((team) => {
         return (
           <div class='mb-6 rounded-lg bg-zinc-800'>
             <a

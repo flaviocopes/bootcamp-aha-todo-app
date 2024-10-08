@@ -6,7 +6,7 @@ import { deleteTeam } from '@data/pocketbase'
 const { team_id = '' } = Astro.params
 
 if (Astro.request.method === 'DELETE') {
-  await deleteTeam(team_id)
+  await deleteTeam(Astro.locals.pb, team_id)
 
   return new Response(null, {
     status: 204,

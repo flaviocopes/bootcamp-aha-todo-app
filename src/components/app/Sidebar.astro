@@ -68,6 +68,6 @@ const projects = await getProjects(Astro.locals.pb)
   <a
     class='block py-2 pl-2 mb-10 border-b rounded-lg cursor-pointer bg-zinc-900 hover:bg-zinc-800 border-zinc-800'
     hx-post='/logout'>
-    Logout @{getUserUsername(Astro.request)}
+    Logout @{getUserUsername(Astro.locals.pb, Astro.request)}
   </a>
 </aside>

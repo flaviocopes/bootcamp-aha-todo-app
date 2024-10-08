@@ -14,7 +14,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
   // globally disable auto cancellation
   context.locals.pb.autoCancellation(false)
 
-  if (!(await isLoggedIn(context.request))) {
+  if (!(await isLoggedIn(context.locals.pb, context.request))) {
     if (context.url.pathname.startsWith('/app/api')) {
       return new Response('Unauthorized', {
         status: 401,
@@ -26,8 +26,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
     }
   }
 
-  if (await isLoggedIn(context.request)) {
-    const verified = await isUserVerified()
+  if (await isLoggedIn(context.locals.pb, context.request)) {
+    const verified = await isUserVerified(context.locals.pb)
     if (!verified) {
       if (context.url.pathname.startsWith('/app')) {
         return context.redirect('/verify')

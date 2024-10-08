@@ -1,4 +1,4 @@
-import { pb } from '@src/data/pocketbase'
+import type { TypedPocketBase } from '@src/data/pocketbase-types'
 
 import type { UsersResponse } from '@src/data/pocketbase-types'
 
@@ -28,7 +28,11 @@ export function isValidData(email: string, password: string) {
   return true
 }
 
-export async function createUser(email: string, password: string) {
+export async function createUser(
+  pb: TypedPocketBase,
+  email: string,
+  password: string
+) {
   return await pb.collection('users').create({
     email: email,
     password: password,
@@ -37,11 +41,15 @@ export async function createUser(email: string, password: string) {
   })
 }
 
-export async function loginUser(email: string, password: string) {
+export async function loginUser(
+  pb: TypedPocketBase,
+  email: string,
+  password: string
+) {
   return await pb.collection('users').authWithPassword(email, password)
 }
 
-export function setCookieAndRedirectToDashboard() {
+export function setCookieAndRedirectToDashboard(pb: TypedPocketBase) {
   return new Response(null, {
     status: 301,
     headers: {
@@ -54,7 +62,7 @@ export function setCookieAndRedirectToDashboard() {
   })
 }
 
-export async function isLoggedIn(request: Request) {
+export async function isLoggedIn(pb: TypedPocketBase, request: Request) {
   if (!request.headers.get('Cookie')) {
     return false
   }
@@ -74,36 +82,45 @@ export async function isLoggedIn(request: Request) {
   return false
 }
 
-export async function getUserUsername(request: Request) {
+export async function getUserUsername(pb: TypedPocketBase, request: Request) {
   pb.authStore.loadFromCookie(request.headers.get('Cookie') || '', 'pb_auth')
   return pb.authStore.model?.username
 }
 
-export async function sendResetPasswordLink(email: string) {
+export async function sendResetPasswordLink(
+  pb: TypedPocketBase,
+  email: string
+) {
   await pb.collection('users').requestPasswordReset(email)
 }
 
-export async function getUserObjectFromDb(user_id: string) {
+export async function getUserObjectFromDb(
+  pb: TypedPocketBase,
+  user_id: string
+) {
   const user: UsersResponse = await pb.collection('users').getOne(user_id)
 
   return user
 }
 
-export function getCurrentUserId() {
+export function getCurrentUserId(pb: TypedPocketBase) {
   return pb.authStore.model?.id
 }
 
-export function getCurrentUserEmail() {
+export function getCurrentUserEmail(pb: TypedPocketBase) {
   return pb.authStore.model?.email
 }
 
-export async function isUserVerified() {
+export async function isUserVerified(pb: TypedPocketBase) {
   //we load from db as user object is not updated immediately if user clicks verify email
-  const user = await getUserObjectFromDb(getCurrentUserId())
+  const user = await getUserObjectFromDb(pb, getCurrentUserId(pb))
   return user.verified
 }
 
-export async function sendVerificationEmail(email: string) {
+export async function sendVerificationEmail(
+  pb: TypedPocketBase,
+  email: string
+) {
   await pb.collection('users').requestVerification(email)
 }
 

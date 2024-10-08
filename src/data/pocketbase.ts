@@ -14,6 +14,14 @@ type TexpandProject = {
   project?: ProjectsResponse
 }
 
+type TexpandMembers = {
+  members: UsersResponse[]
+}
+
+type TexpandTeam = {
+  team: TeamsResponse
+}
+
 export async function getProjects({
   pb,
   team_id,
@@ -228,7 +236,7 @@ export async function updateTeam(
   await pb.collection('teams').update(id, data)
 }
 
-export async function getMembersOfTeam(team_id: string) {
+export async function getMembersOfTeam(pb: TypedPocketBase, team_id: string) {
   const team: TeamsResponse<TexpandMembers> = await pb
     .collection('teams')
     .getOne(team_id, {
@@ -238,7 +246,7 @@ export async function getMembersOfTeam(team_id: string) {
   return team.expand?.members
 }
 
-export async function getOwnerOfTeam(team: TeamsResponse) {
+export async function getOwnerOfTeam(pb: TypedPocketBase, team: TeamsResponse) {
   const user: UsersResponse = await pb
     .collection('users')
     .getOne(team.created_by)
@@ -246,7 +254,7 @@ export async function getOwnerOfTeam(team: TeamsResponse) {
   return user
 }
 
-export async function getInvitesForTeam(team_id: string) {
+export async function getInvitesForTeam(pb: TypedPocketBase, team_id: string) {
   const invites: InvitesResponse[] = await pb
     .collection('invites')
     .getFullList({
@@ -255,14 +263,18 @@ export async function getInvitesForTeam(team_id: string) {
   return invites
 }
 
-export async function addInvite(team_id: string, email: string) {
+export async function addInvite(
+  pb: TypedPocketBase,
+  team_id: string,
+  email: string
+) {
   await pb.collection('invites').create({
     team: team_id,
     email,
   })
 }
 
-export async function getYourInvites() {
+export async function getYourInvites(pb: TypedPocketBase) {
   const options = {
     filter: `email = "${pb.authStore.model?.email}"`,
     expand: 'team',
@@ -274,23 +286,27 @@ export async function getYourInvites() {
   return invites
 }
 
-export async function addMember(team_id: string, person_id: string) {
+export async function addMember(
+  pb: TypedPocketBase,
+  team_id: string,
+  person_id: string
+) {
   await pb.collection('teams').update(team_id, {
     'members+': person_id,
   })
 }
 
-export async function deleteInvite(id: string) {
+export async function deleteInvite(pb: TypedPocketBase, id: string) {
   await pb.collection('invites').delete(id)
 }
 
-export async function getInvite(id: string) {
+export async function getInvite(pb: TypedPocketBase, id: string) {
   const team: InvitesResponse = await pb.collection('invites').getOne(id)
 
   return team
 }
 
-export async function getTask(id: string) {
+export async function getTask(pb: TypedPocketBase, id: string) {
   const options = {
     expand: 'project',
   }

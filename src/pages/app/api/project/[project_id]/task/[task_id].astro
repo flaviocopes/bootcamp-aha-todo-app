@@ -7,7 +7,7 @@ import { deleteTask, updateTask, getTask } from '@data/pocketbase'
 
 const { task_id = '', project_id = '' } = Astro.params
 
-const task = await getTask(task_id)
+const task = await getTask(Astro.locals.pb, task_id)
 
 if (Astro.request.method === 'DELETE') {
   try {

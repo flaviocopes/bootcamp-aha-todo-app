@@ -3,13 +3,13 @@ export const partial = true
 
 import { getYourInvites } from '@data/pocketbase'
 
-const invites = await getYourInvites()
+const invites = await getYourInvites(Astro.locals.pb)
 ---
 
 {
   invites.length > 0 && (
     <ul class='mb-10'>
-      {invites.map(invite => {
+      {invites.map((invite) => {
         return (
           <li class='flex items-center justify-between w-full mb-2 text-zinc-800 dark:text-white'>
             <p>

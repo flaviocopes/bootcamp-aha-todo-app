@@ -4,12 +4,12 @@ import { getCurrentUserId } from '@lib/auth'
 
 import type { APIRoute } from 'astro'
 
-export const POST: APIRoute = async ({ params }) => {
-  const invite = await getInvite(params.invite_id!)
+export const POST: APIRoute = async ({ params, locals }) => {
+  const invite = await getInvite(locals.pb, params.invite_id!)
 
   if (invite) {
-    await addMember(invite.team, getCurrentUserId())
-    await deleteInvite(params.invite_id!)
+    await addMember(locals.pb, invite.team, getCurrentUserId(locals.pb))
+    await deleteInvite(locals.pb, params.invite_id!)
   }
 
   return new Response(null, {

@@ -8,7 +8,7 @@ import { deleteTask, updateTask } from '@data/pocketbase'
 const { task_id = '', project_id = '' } = Astro.params
 
 if (Astro.request.method === 'DELETE') {
-  await deleteTask(task_id)
+  await deleteTask(Astro.locals.pb, task_id)
   return new Response(null, { status: 200 })
 }
 
@@ -17,27 +17,27 @@ if (Astro.request.method === 'PUT') {
   const action = formData.get('action') as string
 
   if (action === 'check') {
-    await updateTask(task_id, {
+    await updateTask(Astro.locals.pb, task_id, {
       completed: true,
       completed_on: new Date().toISOString(),
     })
   } else if (action === 'uncheck') {
-    await updateTask(task_id, {
+    await updateTask(Astro.locals.pb, task_id, {
       completed: false,
       completed_on: '',
     })
   } else if (action === 'star') {
-    await updateTask(task_id, {
+    await updateTask(Astro.locals.pb, task_id, {
       starred: true,
       starred_on: new Date().toISOString(),
     })
   } else if (action === 'unstar') {
-    await updateTask(task_id, {
+    await updateTask(Astro.locals.pb, task_id, {
       starred: false,
       starred_on: '',
     })
   } else if (action === 'edit-text') {
-    await updateTask(task_id, {
+    await updateTask(Astro.locals.pb, task_id, {
       text: formData.get('task-text') as string,
     })
   } else {

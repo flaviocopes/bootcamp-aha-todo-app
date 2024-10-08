@@ -13,7 +13,7 @@ if (!project_id) {
 }
 
 if (Astro.request.method === 'DELETE') {
-  await deleteProject(project_id)
+  await deleteProject(Astro.locals.pb, project_id)
 
   return new Response(null, {
     status: 204,
@@ -33,7 +33,7 @@ if (Astro.request.method === 'PUT') {
     let status = formData.get('status')
 
     if (status) {
-      await updateProject(project_id, {
+      await updateProject(Astro.locals.pb, project_id, {
         status:
           ProjectsStatusOptions[status as keyof typeof ProjectsStatusOptions],
       })
@@ -43,7 +43,7 @@ if (Astro.request.method === 'PUT') {
   } else if (action === 'change_name') {
     const project_name = formData.get('project_name') as string
     if (project_name) {
-      await updateProject(project_id, {
+      await updateProject(Astro.locals.pb, project_id, {
         name: project_name,
       })
       return new Response(null, {

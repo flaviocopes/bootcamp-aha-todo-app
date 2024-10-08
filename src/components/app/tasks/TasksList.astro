@@ -11,9 +11,9 @@ const { project_id, done, starred } = Astro.props
 let tasks = null
 
 if (starred) {
-  tasks = await getStarredTasks()
+  tasks = await getStarredTasks(Astro.locals.pb)
 } else {
-  tasks = await getTasks({ project_id, done })
+  tasks = await getTasks({ pb: Astro.locals.pb, project_id, done })
 }
 ---
 
@@ -25,7 +25,7 @@ if (starred) {
 
 <ul class='space-y-6 mb-10'>
   {
-    tasks.map(task => (
+    tasks.map((task) => (
       <li>
         <div class='flex justify-between space-x-4 items-center'>
           <div>

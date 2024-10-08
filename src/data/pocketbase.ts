@@ -156,7 +156,7 @@ export function processImages(pb: TypedPocketBase, task: TasksResponse) {
   return images
 }
 
-export async function addTeam(name: string) {
+export async function addTeam(pb: TypedPocketBase, name: string) {
   let team = await pb.collection('teams').create({
     name,
     created_by: pb.authStore.model?.id,
@@ -166,14 +166,14 @@ export async function addTeam(name: string) {
   return team
 }
 
-export async function getTeam(id: string) {
+export async function getTeam(pb: TypedPocketBase, id: string) {
   const team = await pb.collection('teams').getOne(id)
 
   return team
 }
 
-export async function userIsTeamOwner(team_id: string) {
-  const team = await getTeam(team_id)
+export async function userIsTeamOwner(pb: TypedPocketBase, team_id: string) {
+  const team = await getTeam(pb, team_id)
   if (team.created_by === pb.authStore.model?.id) {
     return true
   }

@@ -1,7 +1,7 @@
 ---
 import LayoutSite from '@layouts/LayoutSite.astro'
 import { isLoggedIn } from '@lib/auth'
-const loggedIn = await isLoggedIn(Astro.request)
+const loggedIn = await isLoggedIn(Astro.locals.pb, Astro.request)
 ---
 
 <LayoutSite title='SECRETPLAN'>

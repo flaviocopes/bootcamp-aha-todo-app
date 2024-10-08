@@ -77,6 +77,6 @@ const p_classes =
   </button>
 
   <a class={p_classes + ' rounded-b-lg w-full text-left'} hx-post='/logout'>
-    Logout @{getUserUsername(Astro.request)}
+    Logout @{getUserUsername(Astro.locals.pb, Astro.request)}
   </a>
 </aside>

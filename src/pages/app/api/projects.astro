@@ -8,7 +8,7 @@ if (Astro.request.method === 'POST') {
 
   const project_name = formData.get('project_name')?.toString() || ''
 
-  const project = await addProject(project_name)
+  const project = await addProject(Astro.locals.pb, project_name)
 
   Astro.response.headers.set('HX-Redirect', `/app/dashboard`)
 }

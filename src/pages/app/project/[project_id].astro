@@ -5,13 +5,13 @@ import ButtonAddNewTask from '@components/app/tasks/ButtonAddNewTask.astro'
 
 const { project_id = '' } = Astro.params
 
-const project = await getProject(project_id)
+const project = await getProject(Astro.locals.pb, project_id)
 
 if (!project) {
   return Astro.redirect('/app/dashboard')
 }
 
-const tasks = await getTasks(project_id)
+const tasks = await getTasks(Astro.locals.pb, project_id)
 ---
 
 <LayoutApp title={project.name}>
@@ -39,7 +39,7 @@ const tasks = await getTasks(project_id)
           }
 
           <ul class='space-y-6'>
-            {tasks.map(task => <li>{task.text}</li>)}
+            {tasks.map((task) => <li>{task.text}</li>)}
           </ul>
         </div>
 

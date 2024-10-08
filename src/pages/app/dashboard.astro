@@ -6,7 +6,7 @@ import AddNewProjectCard from '@components/app/projects/AddNewProjectCard.astro'
 
 import { getProjects } from '@data/pocketbase'
 
-const projects = await getProjects()
+const projects = await getProjects(Astro.locals.pb)
 ---
 
 <LayoutApp title='Dashboard'>
@@ -17,7 +17,7 @@ const projects = await getProjects()
     </div>
     <div class='space-y-6'>
       <ul class='grid gap-6 sm:grid-cols-2'>
-        {projects.map(project => <ProjectCard project={project} />)}
+        {projects.map((project) => <ProjectCard project={project} />)}
       </ul>
       <AddNewProjectCard />
     </div>

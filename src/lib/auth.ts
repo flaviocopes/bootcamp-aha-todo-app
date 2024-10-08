@@ -147,16 +147,16 @@ export async function processTurnstile(cf_turnstile_response: string) {
   return data.success
 }
 
-export function setUserUsername(username: string) {
+export function setUserUsername(pb: TypedPocketBase, username: string) {
   pb.authStore.model!.username = username
 }
 
-export async function updateOwnUsername(username: string) {
+export async function updateOwnUsername(pb: TypedPocketBase, username: string) {
   await pb.collection('users').update(pb.authStore.model?.id, {
     username: username,
   })
 }
 
-export function getCookie() {
+export function getCookie(pb: TypedPocketBase) {
   return pb.authStore.exportToCookie({ secure: false })
 }

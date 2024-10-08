@@ -25,6 +25,10 @@ type TexpandTeam = {
   team: TeamsResponse
 }
 
+type TexpandUser = {
+  user: UsersResponse
+}
+
 export async function getProjects({
   pb,
   team_id,
@@ -322,11 +326,13 @@ export async function getTask(pb: TypedPocketBase, id: string) {
 }
 
 export async function addActivity({
+  pb,
   team,
   project,
   text,
   type,
 }: {
+  pb: TypedPocketBase
   team: string
   project: string
   text: string
@@ -342,10 +348,12 @@ export async function addActivity({
 }
 
 export async function getActivities({
+  pb,
   team_id,
   project_id,
   user_id,
 }: {
+  pb: TypedPocketBase
   team_id?: string
   project_id?: string
   user_id?: string
@@ -389,14 +397,14 @@ export async function getActivities({
   return activities
 }
 
-export async function getAllProjects() {
+export async function getAllProjects(pb: TypedPocketBase) {
   const projects = await pb.collection('projects').getFullList()
 
   return projects.sort((a, b) => getStatus(a) - getStatus(b))
 }
 
-export async function getCollaborators() {
-  const teams = await getTeams()
+export async function getCollaborators(pb: TypedPocketBase) {
+  const teams = await getTeams(pb)
 
   const collaborators: UsersResponse[] = []
 
@@ -404,7 +412,7 @@ export async function getCollaborators() {
     teams.map(async (team) => {
       await Promise.all(
         team.members.map(async (member) => {
-          const user = await getUserObjectFromDb(member)
+          const user = await getUserObjectFromDb(pb, member)
           if (
             !collaborators.find(
               (collaborator) => collaborator.username === user.username
@@ -414,7 +422,7 @@ export async function getCollaborators() {
           }
         })
       )
-      collaborators.push(await getOwnerOfTeam(team))
+      collaborators.push(await getOwnerOfTeam(pb, team))
     })
   )
 

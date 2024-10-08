@@ -17,7 +17,7 @@ if (!project_id) {
   })
 }
 
-const project = await getProject(project_id)
+const project = await getProject(Astro.locals.pb, project_id)
 
 if (Astro.request.method === 'DELETE') {
   try {
@@ -29,6 +29,7 @@ if (Astro.request.method === 'DELETE') {
   }
 
   await addActivity({
+    pb: Astro.locals.pb,
     team: project.team,
     project: '',
     text: `Project "${project.name}" deleted`,
@@ -65,6 +66,7 @@ if (Astro.request.method === 'PUT') {
       }
 
       await addActivity({
+        pb: Astro.locals.pb,
         team: project.team,
         project: project.id,
         text: `Project "${project.name}" status changed to ${status}`,
@@ -89,6 +91,7 @@ if (Astro.request.method === 'PUT') {
       }
 
       await addActivity({
+        pb: Astro.locals.pb,
         team: project.team,
         project: project.id,
         text: `Project "${old_name}" name changed to ${project_name}`,

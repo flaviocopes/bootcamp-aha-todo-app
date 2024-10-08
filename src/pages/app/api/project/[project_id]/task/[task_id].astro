@@ -19,6 +19,7 @@ if (Astro.request.method === 'DELETE') {
   }
 
   await addActivity({
+    pb: Astro.locals.pb,
     team: task?.expand?.project?.team as string,
     project: project_id,
     text: `Task "${task.text}" deleted`,
@@ -40,6 +41,7 @@ if (Astro.request.method === 'PUT') {
           completed_on: new Date().toISOString(),
         })
         await addActivity({
+          pb: Astro.locals.pb,
           team: task?.expand?.project?.team as string,
           project: project_id,
           text: `Task "${task.text}" marked as completed`,
@@ -52,6 +54,7 @@ if (Astro.request.method === 'PUT') {
           completed_on: '',
         })
         await addActivity({
+          pb: Astro.locals.pb,
           team: task?.expand?.project?.team as string,
           project: project_id,
           text: `Task "${task.text}" marked as not completed`,
@@ -64,6 +67,7 @@ if (Astro.request.method === 'PUT') {
           starred_on: new Date().toISOString(),
         })
         await addActivity({
+          pb: Astro.locals.pb,
           team: task?.expand?.project?.team as string,
           project: project_id,
           text: `Task "${task.text}" marked as starred`,
@@ -76,6 +80,7 @@ if (Astro.request.method === 'PUT') {
           starred_on: '',
         })
         await addActivity({
+          pb: Astro.locals.pb,
           team: task?.expand?.project?.team as string,
           project: project_id,
           text: `Task "${task.text}" marked as not starred`,
@@ -87,6 +92,7 @@ if (Astro.request.method === 'PUT') {
           text: formData.get('task-text') as string,
         })
         await addActivity({
+          pb: Astro.locals.pb,
           team: task?.expand?.project?.team as string,
           project: project_id,
           text: `Task "${task.text}" text edited`,
@@ -99,6 +105,7 @@ if (Astro.request.method === 'PUT') {
             images: formData.getAll('images') as string[],
           })
           await addActivity({
+            pb: Astro.locals.pb,
             team: task?.expand?.project?.team as string,
             project: project_id,
             text: `Task "${task.text}" image added`,
@@ -116,6 +123,7 @@ if (Astro.request.method === 'PUT') {
           'images-': formData.get('image') as string,
         })
         await addActivity({
+          pb: Astro.locals.pb,
           team: task?.expand?.project?.team as string,
           project: project_id,
           text: `Task "${task.text}" image deleted`,

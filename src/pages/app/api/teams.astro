@@ -9,6 +9,7 @@ if (Astro.request.method === 'POST') {
   const team = await addTeam(Astro.locals.pb, team_name)
 
   await addActivity({
+    pb: Astro.locals.pb,
     team: team.id,
     project: '',
     text: `Team ${team.name} created`,

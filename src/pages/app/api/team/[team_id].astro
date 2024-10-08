@@ -18,6 +18,7 @@ if (Astro.request.method === 'DELETE') {
   await deleteTeam(Astro.locals.pb, team_id)
 
   await addActivity({
+    pb: Astro.locals.pb,
     team: '',
     project: '',
     text: `Team ${team.name} deleted`,
@@ -41,11 +42,14 @@ if (Astro.request.method === 'PUT') {
   if (action === 'change_name') {
     const team_name = formData.get('team_name') as string
     if (team_name) {
+      const old_name = team.name
+
       await updateTeam(Astro.locals.pb, team_id, {
         name: team_name,
       })
 
       await addActivity({
+        pb: Astro.locals.pb,
         team: team_id,
         project: '',
         text: `Team ${old_name} renamed to ${team_name}`,

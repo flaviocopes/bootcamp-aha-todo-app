@@ -3,7 +3,7 @@ import LayoutApp from '@layouts/LayoutApp.astro'
 import { getProject, getTeam } from '@data/pocketbase'
 const { project_id = '' } = Astro.params
 
-import TasksList from '@components/app/tasks/TasksList.astro'
+import SingleProject from '@components/app/projects/SingleProject.astro'
 
 let project
 try {

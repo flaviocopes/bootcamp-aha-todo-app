@@ -26,6 +26,7 @@ if (Astro.request.method === 'DELETE') {
   })
 
   await addActivity({
+    pb: Astro.locals.pb,
     team: '',
     project: '',
     text: `Team ${team.name} deleted`,

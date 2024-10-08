@@ -115,7 +115,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
     const { team_id } = metadata
 
-    const team = await getTeam(team_id)
+    const team = await getTeam(locals.pb, team_id)
 
     if (!team) {
       throw new Error('Team not found')
@@ -127,7 +127,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       throw new Error('Subscription ID mismatch')
     }
 
-    await updateTeam(team_id, {
+    await updateTeam(locals.pb, team_id, {
       status: TeamsStatusOptions.freezed,
     })
   }

@@ -13,7 +13,6 @@ if (Astro.request.method === 'POST') {
   const team_id = formData.get('team_id')?.toString() || ''
   const project_name = formData.get('project_name')?.toString() || ''
 
-  let project
   try {
     project = await addProject(Astro.locals.pb, project_name, team_id)
   } catch (e: any) {

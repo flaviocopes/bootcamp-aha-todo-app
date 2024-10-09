@@ -1,10 +1,6 @@
 import { defineMiddleware } from 'astro/middleware'
-
-import PocketBase from 'pocketbase'
-
-import type { TypedPocketBase } from '@src/data/pocketbase-types'
-
 import { isLoggedIn, isUserVerified } from '@lib/auth'
+
 import PocketBase from 'pocketbase'
 
 import type { TypedPocketBase } from '@src/data/pocketbase-types'
